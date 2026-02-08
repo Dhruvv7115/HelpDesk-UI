@@ -3,42 +3,30 @@
 import * as React from "react";
 import {
 	ArchiveX,
-	Command,
+	ChevronDown,
 	File,
+	Headset,
 	Inbox,
-	Send,
-	Trash2,
-	Home,
-	Lightbulb,
-	User,
-	FileText,
-	Calculator,
 	LayoutGrid,
-	Layers,
-	GitBranch, // or Shuffle
-	Bot,
-	Database,
-	RotateCcw,
-	BarChart3,
-	Settings,
+	List,
+	Search,
+	Send,
+	SlidersHorizontal,
+	Trash2,
 } from "lucide-react";
 
-import { NavUser } from "@/components/nav-user";
-import { Label } from "@/components/ui/label";
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarHeader,
-	SidebarInput,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 
 // This is sample data
 const data = {
@@ -74,111 +62,150 @@ const data = {
 			isActive: false,
 		},
 	],
-	mails: [
+	ticketViews: [
 		{
-			name: "William Smith",
-			email: "williamsmith@example.com",
-			subject: "Meeting Tomorrow",
-			date: "09:34 AM",
-			teaser:
-				"Hi team, just a reminder about our meeting tomorrow at 10 AM.\nPlease come prepared with your project updates.",
+			title: "My Tickets",
+			count: 9,
+			isActive: true,
 		},
 		{
-			name: "Alice Smith",
-			email: "alicesmith@example.com",
-			subject: "Re: Project Update",
-			date: "Yesterday",
-			teaser:
-				"Thanks for the update. The progress looks great so far.\nLet's schedule a call to discuss the next steps.",
+			title: "Past Due",
+			count: 4,
+			isActive: false,
 		},
 		{
-			name: "Bob Johnson",
-			email: "bobjohnson@example.com",
-			subject: "Weekend Plans",
-			date: "2 days ago",
-			teaser:
-				"Hey everyone! I'm thinking of organizing a team outing this weekend.\nWould you be interested in a hiking trip or a beach day?",
+			title: "High Priority",
+			count: 11,
+			isActive: false,
 		},
 		{
-			name: "Emily Davis",
-			email: "emilydavis@example.com",
-			subject: "Re: Question about Budget",
-			date: "2 days ago",
-			teaser:
-				"I've reviewed the budget numbers you sent over.\nCan we set up a quick call to discuss some potential adjustments?",
+			title: "Unassigned",
+			count: 98,
+			isActive: false,
 		},
 		{
-			name: "Michael Wilson",
-			email: "michaelwilson@example.com",
-			subject: "Important Announcement",
-			date: "1 week ago",
-			teaser:
-				"Please join us for an all-hands meeting this Friday at 3 PM.\nWe have some exciting news to share about the company's future.",
+			title: "All Tickets",
+			count: 2192,
+			isActive: false,
+		},
+	],
+	tickets: [
+		{
+			title: "Soluta quam velit",
+			date: "Jun 2",
+			code: "APPS-216",
+			status: "To Do",
+			priority: "high",
+			isActive: false,
 		},
 		{
-			name: "Sarah Brown",
-			email: "sarahbrown@example.com",
-			subject: "Re: Feedback on Proposal",
-			date: "1 week ago",
-			teaser:
-				"Thank you for sending over the proposal. I've reviewed it and have some thoughts.\nCould we schedule a meeting to discuss my feedback in detail?",
+			title: "Laudantium neque veritatis",
+			date: "Jun 2",
+			code: "OPS-102",
+			status: "To Do",
+			priority: "medium",
+			isActive: true,
 		},
 		{
-			name: "David Lee",
-			email: "davidlee@example.com",
-			subject: "New Project Idea",
-			date: "1 week ago",
-			teaser:
-				"I've been brainstorming and came up with an interesting project concept.\nDo you have time this week to discuss its potential impact and feasibility?",
+			title: "Molestiae saepe illum",
+			date: "Jun 1",
+			code: "APPS-216",
+			status: "To Do",
+			priority: "low",
+			isActive: false,
 		},
 		{
-			name: "Olivia Wilson",
-			email: "oliviawilson@example.com",
-			subject: "Vacation Plans",
-			date: "1 week ago",
-			teaser:
-				"Just a heads up that I'll be taking a two-week vacation next month.\nI'll make sure all my projects are up to date before I leave.",
+			title: "Dignissimos maiores porro",
+			date: "May 31",
+			code: "APPS-216",
+			status: "To Do",
+			priority: "low",
+			isActive: false,
 		},
 		{
-			name: "James Martin",
-			email: "jamesmartin@example.com",
-			subject: "Re: Conference Registration",
-			date: "1 week ago",
-			teaser:
-				"I've completed the registration for the upcoming tech conference.\nLet me know if you need any additional information from my end.",
+			title: "Nihil porro repudiandae",
+			date: "May 31",
+			code: "APPS-216",
+			status: "To Do",
+			priority: "low",
+			isActive: false,
 		},
 		{
-			name: "Sophia White",
-			email: "sophiawhite@example.com",
-			subject: "Team Dinner",
-			date: "1 week ago",
-			teaser:
-				"To celebrate our recent project success, I'd like to organize a team dinner.\nAre you available next Friday evening? Please let me know your preferences.",
+			title: "Aspernatur cumque ipsum",
+			date: "May 30",
+			code: "APPS-216",
+			status: "To Do",
+			priority: "low",
+			isActive: false,
+		},
+		{
+			title: "Culpa quos aliquam",
+			date: "May 30",
+			code: "APPS-216",
+			status: "To Do",
+			priority: "low",
+			isActive: false,
+		},
+		{
+			title: "Atque incidunt autem",
+			date: "May 30",
+			code: "APPS-216",
+			status: "To Do",
+			priority: "low",
+			isActive: false,
+		},
+		{
+			title: "Ut sapiente sunt",
+			date: "May 29",
+			code: "APPS-216",
+			status: "Done",
+			priority: "low",
+			isActive: false,
 		},
 	],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+	onSidebarWidthChange?: (width: number) => void;
+};
+
+export function AppSidebar({
+	onSidebarWidthChange,
+	...props
+}: AppSidebarProps) {
 	// Note: I'm using state to show active item.
 	// IRL you should use the url/router.
 	const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
-	const [mails, setMails] = React.useState(data.mails);
+	const [isMiddleOpen, setIsMiddleOpen] = React.useState(false);
 	const { setOpen } = useSidebar();
+
+	const baseSidebarWidth = 350;
+	const middleSidebarWidth = 260;
+	const totalSidebarWidth = isMiddleOpen
+		? baseSidebarWidth + middleSidebarWidth
+		: baseSidebarWidth;
+
+	React.useEffect(() => {
+		onSidebarWidthChange?.(totalSidebarWidth);
+	}, [onSidebarWidthChange, totalSidebarWidth]);
 
 	return (
 		<Sidebar
 			collapsible="icon"
-			className="overflow-hidden *:data-[sidebar=sidebar]:flex-row top-16"
+			style={
+				{
+					"--sidebar-width": `${totalSidebarWidth}px`,
+				} as React.CSSProperties
+			}
+			className="overflow-hidden *:data-[sidebar=sidebar]:flex-row top-16 border-none"
 			{...props}
 		>
 			{/* This is the first sidebar */}
-			{/* We disable collapsible and adjust width to icon. */}
-			{/* This will make the sidebar appear as icons. */}
 			<Sidebar
 				collapsible="none"
 				className="w-[calc(var(--sidebar-width-icon)+1px)]!"
 			>
-				<SidebarContent className="bg-blue-950">
+				<SidebarContent className="bg-blue-950 border-0">
 					<SidebarGroup>
 						<SidebarGroupContent className="px-1.5 md:px-0">
 							<SidebarMenu>
@@ -194,13 +221,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 											}}
 											onClick={() => {
 												setActiveItem(item);
-												const mail = data.mails.sort(() => Math.random() - 0.5);
-												setMails(
-													mail.slice(
-														0,
-														Math.max(5, Math.floor(Math.random() * 10) + 1),
-													),
-												);
 												setOpen(true);
 											}}
 											isActive={activeItem?.title === item.title}
@@ -220,43 +240,151 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</SidebarContent>
 			</Sidebar>
 
+			{/* This is the middle (third) sidebar */}
+			<div
+				className={cn(
+					"hidden md:flex border-0 transition-[width] duration-200 ease-linear overflow-hidden",
+					isMiddleOpen ? "w-65" : "w-0",
+				)}
+			>
+				<Sidebar
+					collapsible="none"
+					style={{ "--sidebar-width": "260px" } as React.CSSProperties}
+					className="bg-[#f2f5f9]"
+				>
+					<SidebarHeader className="gap-3 border-b px-4 py-3">
+						<div className="text-[11px] font-semibold tracking-[0.18em] text-slate-500">
+							TICKET VIEWS
+						</div>
+					</SidebarHeader>
+					<SidebarContent className="px-3 py-3">
+						<SidebarGroup className="px-0">
+							<SidebarGroupContent className="space-y-1">
+								{data.ticketViews.map((view) => (
+									<button
+										key={view.title}
+										type="button"
+										className={cn(
+											"flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition",
+											view.isActive
+												? "bg-blue-600 text-white shadow-sm"
+												: "text-slate-700 hover:bg-white",
+										)}
+									>
+										<span>{view.title}</span>
+										<span
+											className={cn(
+												"rounded-md px-2 py-0.5 text-xs font-semibold",
+												view.isActive
+													? "bg-blue-500 text-white"
+													: "bg-white text-slate-600",
+											)}
+										>
+											{view.count.toLocaleString()}
+										</span>
+									</button>
+								))}
+							</SidebarGroupContent>
+						</SidebarGroup>
+						<div className="mt-5 space-y-2 border-t pt-4">
+							<div className="flex items-center gap-3 px-3 text-xs font-semibold tracking-[0.2em] text-slate-500">
+								<Headset className="h-4 w-4" />
+								<span>LIVE CHATS</span>
+							</div>
+							<div className="flex items-center gap-3 px-3 text-xs font-semibold tracking-[0.2em] text-slate-500">
+								<LayoutGrid className="h-4 w-4" />
+								<span>BOARDS</span>
+							</div>
+						</div>
+					</SidebarContent>
+				</Sidebar>
+			</div>
+
 			{/* This is the second sidebar */}
-			{/* We disable collapsible and let it fill remaining space */}
 			<Sidebar
 				collapsible="none"
-				className="hidden flex-1 md:flex"
+				className="hidden md:flex border-0 flex-1"
 			>
 				<SidebarHeader className="gap-3.5 border-b p-4">
 					<div className="flex w-full items-center justify-between">
-						<div className="text-foreground text-base font-medium">
-							{activeItem?.title}
+						<div className="flex items-center gap-3">
+							<List className="h-5 w-5 text-slate-500" />
+							<button
+								type="button"
+								className="flex items-center gap-2 text-base font-semibold text-slate-800"
+							>
+								My Tickets
+								<ChevronDown className="h-4 w-4 text-slate-500" />
+							</button>
 						</div>
-						<Label className="flex items-center gap-2 text-sm">
-							<span>Unreads</span>
-							<Switch className="shadow-none" />
-						</Label>
+						<div className="flex items-center gap-2">
+							<button
+								type="button"
+								onClick={() => setIsMiddleOpen((open) => !open)}
+								className="text-muted-foreground hover:text-foreground rounded-md border px-2 py-1 text-xs"
+							>
+								{isMiddleOpen ? "Hide views" : "Show views"}
+							</button>
+							<button
+								type="button"
+								className="flex items-center justify-center rounded-lg border px-2 py-1 text-slate-500"
+							>
+								<SlidersHorizontal className="h-4 w-4" />
+							</button>
+						</div>
 					</div>
-					<SidebarInput placeholder="Type to search..." />
+					<div className="flex items-center gap-2 rounded-xl border px-3 py-2 text-sm text-slate-500">
+						<Search className="h-4 w-4" />
+						<span>Search tickets</span>
+					</div>
 				</SidebarHeader>
 				<SidebarContent>
 					<SidebarGroup className="px-0">
 						<SidebarGroupContent>
-							{mails.map((mail) => (
-								<a
-									href="#"
-									key={mail.email}
-									className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0"
-								>
-									<div className="flex w-full items-center gap-2">
-										<span>{mail.name}</span>{" "}
-										<span className="ml-auto text-xs">{mail.date}</span>
-									</div>
-									<span className="font-medium">{mail.subject}</span>
-									<span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
-										{mail.teaser}
-									</span>
-								</a>
-							))}
+							{data.tickets.map((ticket) => {
+								const priorityStyles: Record<string, string> = {
+									high: "border-red-500 text-red-500 bg-red-50",
+									medium: "border-orange-500 text-orange-500 bg-orange-50",
+									low: "border-emerald-500 text-emerald-500 bg-emerald-50",
+								} as const;
+								return (
+									<button
+										key={ticket.title}
+										type="button"
+										className={cn(
+											"flex w-full flex-col gap-3 border-b px-4 py-4 text-left transition",
+											ticket.isActive ? "bg-blue-100/70" : "hover:bg-slate-50",
+										)}
+									>
+										<div className="flex items-center justify-between text-sm">
+											<span className="font-semibold text-slate-800">
+												{ticket.title}
+											</span>
+											<span className="text-xs text-slate-500">
+												{ticket.date}
+											</span>
+										</div>
+										<div className="flex items-center gap-3 text-xs text-slate-500">
+											<span className="inline-flex h-4 w-4 items-center justify-center rounded border border-slate-300 bg-white" />
+											<span className="text-sm font-semibold tracking-tight text-slate-600">
+												{ticket.code}
+											</span>
+											<span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
+												{ticket.status}
+											</span>
+											<span
+												className={cn(
+													"inline-flex items-center justify-center rounded-full border px-2 py-1 text-[10px] font-semibold",
+													priorityStyles[ticket.priority],
+												)}
+											>
+												!
+											</span>
+											<span className="h-6 w-6 rounded-full bg-slate-200" />
+										</div>
+									</button>
+								);
+							})}
 						</SidebarGroupContent>
 					</SidebarGroup>
 				</SidebarContent>
