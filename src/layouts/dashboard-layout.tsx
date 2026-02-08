@@ -1,13 +1,5 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
 	SidebarInset,
@@ -23,9 +15,9 @@ export default function DashboardLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const searchRef = React.useRef<HTMLInputElement | null>(null);
-	const [isSearchOpen, setIsSearchOpen] = React.useState(false);
-	const [sidebarWidth, setSidebarWidth] = React.useState(350);
+	const searchRef = useRef<HTMLInputElement | null>(null);
+	const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+	const [sidebarWidth, setSidebarWidth] = useState<number>(350);
 
 	React.useEffect(() => {
 		function onKeyDown(event: KeyboardEvent) {
