@@ -95,8 +95,10 @@ export default function DashboardLayout({
 						</button>
 						<div className="flex items-center rounded-full bg-white/10 text-sm">
 							<img
-								src="./src/assets/user.jpg"
+								src="./user.jpg"
 								className="rounded-full object-cover aspect-square h-8 w-8"
+								loading="lazy"
+								alt="User"
 							/>
 						</div>
 					</div>
