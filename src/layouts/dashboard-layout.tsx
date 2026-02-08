@@ -9,6 +9,14 @@ import {
 import { ChevronDown, Gift, HelpCircle, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Kbd } from "@/components/ui/kbd";
+import {
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export default function DashboardLayout({
 	children,
@@ -132,8 +140,19 @@ export default function DashboardLayout({
 							orientation="vertical"
 							className="mr-2 data-[orientation=vertical]:h-4"
 						/>
+						<Breadcrumb>
+							<BreadcrumbList>
+								<BreadcrumbItem className="hidden md:block">
+									<BreadcrumbLink href="#">All Inboxes</BreadcrumbLink>
+								</BreadcrumbItem>
+								<BreadcrumbSeparator className="hidden md:block" />
+								<BreadcrumbItem>
+									<BreadcrumbPage>Inbox</BreadcrumbPage>
+								</BreadcrumbItem>
+							</BreadcrumbList>
+						</Breadcrumb>
 					</header>
-					<h2>Landantium neque veritatis</h2>
+
 					<div className="px-6 pb-6">{children}</div>
 				</SidebarInset>
 			</SidebarProvider>
